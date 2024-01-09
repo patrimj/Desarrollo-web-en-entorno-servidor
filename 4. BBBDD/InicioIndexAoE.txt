@@ -1,0 +1,57 @@
+<?php 
+
+$metodo = $_SERVER['REQUEST_METHOD'];
+echo($_SERVER['REQUEST_URI']);
+
+if ($metodo == 'GET'){
+  $c1 = Factoria::generaCiv("Esp","Isabel I",150);
+  $c2 = Factoria::generaCiv("Biz","Constantino II",100);
+}
+elseif ($metodo=="POST") {
+  $datosRecibidos = file_get_contents("php://input");
+  $data = json_decode($datosRecibidos, true);
+  $c1 = Factoria::generaCiv($data[0]["nombre"],$data[0]["rey"],$data[0]["vida"]);
+  $c2 = Factoria::generaCiv($data[1]["nombre"],$data[1]["rey"],$data[1]["vida"]);
+} else {
+  
+}
+$datosRecibidos = file_get_contents("php://input");
+// print_r($datosRecibidos);
+$data = json_decode($datosRecibidos, true);
+// print_r($data);
+// echo $data['nombre'];
+// echo $data['edad'];
+// echo $data['matriculado'];
+/*
+{
+  "nombre":"DAW2",
+  "edad":12,
+  "matriculado":true,
+  "modulos":[
+    {
+      "cod":101,
+      "desc":"PROG"
+    },
+    {
+      "cod":202,
+      "desc":"ED"
+    }
+   ]
+}
+*/
+echo $data['nombre'];
+echo $data['modulos'][0]['cod'];
+
+
+---- Json ----
+[{
+   "nombre":"Esp",
+   "rey":"Gasol",
+   "vida":120
+   },
+  {
+   "nombre":"Fra",
+   "rey":"Parker",
+   "vida":100
+   }
+]
