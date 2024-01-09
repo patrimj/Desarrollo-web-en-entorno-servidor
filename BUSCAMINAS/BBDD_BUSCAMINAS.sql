@@ -1,0 +1,50 @@
+
+//BASE DE DATOS
+
+
+CREATE DATABASE IF NOT EXISTS buscaminas;
+
+USE buscaminas;
+
+CREATE TABLE IF NOT EXISTS usuarios (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(50) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  rol ENUM('administrador', 'jugador') NOT NULL DEFAULT 'jugador',
+  activo TINYINT(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (id),
+  UNIQUE KEY email_UNIQUE (email)
+);
+
+CREATE TABLE IF NOT EXISTS partidas (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  id_usuario INT(11) NOT NULL,
+  tablero VARCHAR(255) NOT NULL,
+  tablero_visible VARCHAR(255) NOT NULL,
+  minas INT(11) NOT NULL,
+  estado ENUM('abierta', 'ganada', 'perdida') NOT NULL DEFAULT 'abierta',
+  fecha_creacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  fecha_modificacion TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS partidas_historico (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  id_partida INT(11) NOT NULL,
+  tablero VARCHAR(255) NOT NULL,
+  tablero_visible VARCHAR(255) NOT NULL,
+  accion VARCHAR(50) NOT NULL,
+  fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_partida) REFERENCES partidas(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS partidas_ganadas (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  id_usuario INT(11) NOT NULL,
+  cantidad INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
+);
