@@ -1,5 +1,5 @@
 const faker = require('faker');
-const Tarea = require('../../models/Tarea');
+const Tarea = require('../models/Tarea');
 
 function crearTarea() {
 const descripcion = faker.lorem.sentence();
