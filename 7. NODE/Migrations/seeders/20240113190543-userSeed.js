@@ -32,7 +32,7 @@ module.exports = {
   //   }], {});
   // },
   const users = await genUsers(4);
-  await queryInterface.bulkInsert('users', users, {});
+  await queryInterface.bulkInsert('users', users, {}); // bulkInsert es una funcion de sequelize que te permite insertar varios registros a la vez
 },
 
   async down (queryInterface, Sequelize) {

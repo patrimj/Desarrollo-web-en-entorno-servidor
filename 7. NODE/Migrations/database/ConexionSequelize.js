@@ -1,6 +1,6 @@
 require('dotenv').config()
-const { Sequelize, Op } = require('sequelize');
-const models = require('../models/index.js'); //Esto tiene acceso a todos los modelos.
+const { Sequelize, Op } = require('sequelize'); // Op es para los operadores de sequelize
+const models = require('../models/index.js'); //Esto tiene acceso a todos los modelos., lo genera solo el sequelize-cli
 
 class ConexionSequilze {
 
@@ -41,8 +41,8 @@ class ConexionSequilze {
         let resultado = [];
         this.conectar();
         console.log(`Accediendo a los datos...`)
-        resultado = await models.User.findAll({
-            attributes: ['id', 'firstName', 'lastName', 'email']
+        resultado = await models.User.findAll({ // a traves de models accedo a todos los modelos 
+            attributes: ['id', 'firstName', 'lastName', 'email'] // solo quiero estos campos, para alomejor ocultar el password
           });
         this.desconectar();
         return resultado;
@@ -65,7 +65,7 @@ class ConexionSequilze {
         try{
             // const usuarioNuevo = new Persona(body); //Con esto añade los timeStamps.
             // await usuarioNuevo.save();
-            const usuarioNuevo = await models.User.create(body);
+            const usuarioNuevo = await models.User.create(body); // solo crea los campos que le digo en el body
             resultado = 1; // Asume que la inserción fue exitosa
         } catch (error) {
             if (error instanceof Sequelize.UniqueConstraintError) {
@@ -119,7 +119,7 @@ class ConexionSequilze {
         this.conectar();
         console.log(idU)
         resultado = await models.User.findAll({ 
-            where: { id: { [Op.eq]: idU } },
+            where: { id: { [Op.eq]: idU } }, // id igual que el que me pasas y le aplicas [include] a ese modelo
             include: [{
               model: models.Comment,
               as: 'commentsUser'

@@ -2,28 +2,21 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('comments', {
+    await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      comentario: {
+      firstName: {
         type: Sequelize.STRING
       },
-      puntuacion: {
+      lastName: {
         type: Sequelize.STRING
       },
-      userId: {//te crea este campo en la bbdd
-        type: Sequelize.DataTypes.INTEGER,
-        references: {
-          model: {
-            tableName: 'users' //que la migration automaticamente haga la foreing key
-          },
-          key: 'id'
-        },
-        allowNull: false
+      email: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +29,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('comments');
+    await queryInterface.dropTable('Users');
   }
 };

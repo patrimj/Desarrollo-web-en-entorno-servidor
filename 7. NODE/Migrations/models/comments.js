@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   {
     sequelize,
     modelName: 'Comment',
-    tableName: 'comments'
+    tableName: 'comments' // los modelos en mayuscula y singular y los nombres de las tablas en minuscula y plural
   });
   return Comment;
 };
