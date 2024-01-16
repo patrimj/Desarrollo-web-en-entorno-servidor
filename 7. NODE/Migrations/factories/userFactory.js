@@ -9,7 +9,6 @@ const genUsers = async (ctos = 1) => {
         let u = 
             {
             firstName: fakerES.person.firstName(),
-            lastName: fakerES.person.lastName(),
             email: fakerES.internet.email(),
             password: password,
             createdAt: new Date(),
