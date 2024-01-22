@@ -1,5 +1,6 @@
 const genRoles = async () => {
 
+    //TODO: FAKER DE ROL PARA FUTUROS USOS
     let rolGen = []
     const nombres = ['Admin', 'Programador'];
 

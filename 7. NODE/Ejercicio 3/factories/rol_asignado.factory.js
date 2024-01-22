@@ -3,6 +3,7 @@ const { Rol_Asignado, Roles, User } = require('../models');
 const genRolesAsignados = async (ctos = 1) => { 
     let rolAsignadoGen = []
 
+    //TODO: FAKER DE ROL_ASIGNADO PARA FUTUROS USOS
     // TODO: sacamos los roles y usuarios que tenemos en la bbdd para asignarlos
     const roles = await Roles.findAll();
     const usuarios = await User.findAll();
@@ -12,17 +13,16 @@ const genRolesAsignados = async (ctos = 1) => {
     let asignaciones = {}; 
 
     for (let i = 0; i < usuarios.length; i++) {
-        // Primera combinación: usuario con el primer rol
+        // Primera combinación: usuario con el primer rol [admin]
         datos.push({ id_rol: roles[1].id, id_usuario: usuarios[i].id });
         asignaciones[usuarios[i].id] = [roles[1].id]; //guardamos la asignación
 
-        // Segunda combinación: usuario con el segundo rol, si existe y si Math.random() es mayor que 0.5
+        // Segunda combinación: usuario con el segundo rol [progrmador]
         if (roles.length > 1 && Math.random() > 0.5 && !asignaciones[usuarios[i].id].includes(roles[0].id)) { 
             datos.push({ id_rol: roles[0].id, id_usuario: usuarios[i].id });
             asignaciones[usuarios[i].id].push(roles[0].id);
         }
     }
-
 
     // mezclamos pero no repetimos
     datos.sort(() => Math.random());

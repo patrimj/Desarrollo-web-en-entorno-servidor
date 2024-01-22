@@ -53,7 +53,7 @@ router.put('/tarea/modificar/:id',
 router.delete('/tarea/eliminar/:id', midsJWT.validarJWT,midsRoles.esAdmin, controladorTarea.eliminarTarea);
 
 //ASIGNAR TAREA A USUARIO
-router.put('/tarea/asignar/:id/:id_usuario', midsJWT.validarJWT,midsRoles.esAdmin, controladorTarea.asignarTareaUsuario);
+router.put('/tarea/asignar/:id/:id_usuario', midsJWT.validarJWT,midsRoles.esAdmin, controladorTarea.asignarTareaAUsuario);
 
 // VER TAREAS PROGRAMADOR
 router.get('/tareas/programador/:id_usuario', midsJWT.validarJWT,midsRoles.esAdmin, controladorTarea.verTareasProgramador);

@@ -30,7 +30,7 @@ class UsuarioConexion{
         });
         this.desconectar();
         if (!resultado) {
-            throw error;
+            throw new Error('No se encontró el usuario');
         }
         return resultado;
     }
@@ -44,7 +44,7 @@ class UsuarioConexion{
             resultado = 1; 
         } catch (error) {
             if (error instanceof Sequelize.UniqueConstraintError) {
-                console.log(`El id ${body.email} ya existe en la base de datos.`);
+                console.log(`El email ${body.email} ya existe en la base de datos.`);
             } else {
                 console.log('Ocurrió un error desconocido: ', error);
             }
@@ -81,7 +81,7 @@ class UsuarioConexion{
             resultado = 1; 
         } catch (error) {
             if (error instanceof Sequelize.UniqueConstraintError) {
-                console.log(`El id ${body.email} ya existe en la base de datos.`);
+                console.log(`El email ${body.email} ya existe en la base de datos.`);
             } else {
                 console.log('Ocurrió un error desconocido: ', error);
             }

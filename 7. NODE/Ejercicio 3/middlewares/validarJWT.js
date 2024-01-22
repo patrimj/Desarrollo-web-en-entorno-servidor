@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const {response, request} = require('express')  //Incorporamos esto aquí porque vamos a añadir elementos a req que sacaremos del token.
 
+
 const validarJWT = (req , res , next) => {  //Estas asignaciones son necesarias para almacenar en el request los datos que extraigamos del token.
     const token = req.header('x-token');  //Este nombre será establecido en el cliente también.
 

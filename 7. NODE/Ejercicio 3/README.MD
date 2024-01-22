@@ -387,7 +387,24 @@ SECRETORPRIVATEKEY=eST0EsmiPiblic@key
   "password": "admin123"
 }
 ```
+##### Ejemplo de respuesta al iniciar sesión 
+*** El token no caducará en 4 años ***
+```json
+{
+  "usu": {
+    "id": 6,
+    "nombre": "Patricia",
+    "email": "patricia@correo.com",
+    "password": "admin123",
+    "createdAt": "2024-01-22T18:11:01.000Z",
+    "updatedAt": "2024-01-22T18:11:01.000Z"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJpYXQiOjE3MDU5NDkxMTEsImV4cCI6MTgzMjE3OTUxMX0.vQtwVqQhZuKAERIPvuP9AkUNnwknbW4HuSyySEQokOg"
+}
+```
+
 - El token deberá ser enviado en el header de las peticiones que lo requieran, con el nombre `x-token`.
+- Headers > x-token > eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c3VhcmlvIjo2LCJpYXQiOjE3MDU5NDk3NTQsImV4cCI6MTgzMjE4MDE1NH0.jd6Kv7BDy6ogLXMyK5QpNS5e8eoz_1BHueRNIBmpmhE
 ---
 
 #### Cambiar contraseña

@@ -1,9 +1,11 @@
 const { Tarea_Asignada, Tarea, User } = require('../models');
 
+//TODO: FAKER DE TAREA_ASIGNADA PARA FUTUROS USOS (SE PUEDE MEJORAR)
+
 const genTareasAsignadas = async (ctos = 1) => {
     let tareasAsignadasGen = []
 
-    // Obtenemos las tareas y usuarios que tenemos en la bbdd para asignarlos
+
     const tareas = await Tarea.findAll();
     const usuarios = await User.findAll();
 
@@ -14,16 +16,15 @@ const genTareasAsignadas = async (ctos = 1) => {
         // Seleccionamos una tarea aleatoria
         let tareaAleatoria = tareas[Math.floor(Math.random() * tareas.length)];
     
-        // Combinación: usuario con la tarea aleatoria
+        // usuario con la tarea aleatoria
         datos.push({ id_tarea: tareaAleatoria.id, id_usuario: usuarios[i].id });
     
-        // Guardamos la asignación
         if (!asignaciones[usuarios[i].id]) {
             asignaciones[usuarios[i].id] = [];
         }
         asignaciones[usuarios[i].id].push(tareaAleatoria.id);
     
-        // Si hay más de una tarea, intentamos asignar una segunda tarea aleatoria que no sea la misma que la primera
+        // Si tenemoz más de una tarea, sacamos una segunda tarea aleatoria que no sea la misma que la primera
         if (tareas.length > 1) {
             let segundaTarea;
             do {

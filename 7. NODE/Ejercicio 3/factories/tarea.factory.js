@@ -1,6 +1,6 @@
 const { faker, fakerES } = require('@faker-js/faker');
 
-const genTareas = async (ctos = 1) => { // ctos = cantidad de tareas a generar
+const genTareas = async (ctos = 1) => { 
     let tareasGen = []
     for (let i = 1; i <= ctos; i++) {
 

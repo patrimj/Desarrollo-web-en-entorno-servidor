@@ -8,7 +8,7 @@ const midsRoles = require("../middlewares/validarRoles");
 
 //RUTAS CUALQUIER USUARIO
 
-router.post('/login', //LOGIN
+router.post('/login',
     [
         check('email', 'El correo no es válido').isEmail(),
         check('password', 'El password debe de ser más de 6 letras').isLength({ min: 6 }),

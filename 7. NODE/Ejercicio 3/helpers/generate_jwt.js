@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const generarJWT = (id_usuario = '') => {
     //En el token podemos hacer que viaje (en el payload) el id de ese usuario. No supone un gran fallo de seguridad y nos permite sacar la información del mismo en los middleware.
     console.log("id:" + id_usuario)
-    let token = jwt.sign({ id_usuario }, process.env.SECRETORPRIVATEKEY, { /// jwt.sign({ uid } cambiar uid con lo que queremos que aparezca
+    let token = jwt.sign({ id: id_usuario }, process.env.SECRETORPRIVATEKEY, { /// jwt.sign({ uid } cambiar uid con lo que queremos que aparezca
         expiresIn: '4y' // 24 hours
       });
     return token;

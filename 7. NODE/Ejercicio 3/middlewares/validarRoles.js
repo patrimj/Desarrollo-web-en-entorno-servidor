@@ -6,7 +6,7 @@ const esAdmin = async (req, res, next) => {
     }
 
     try {
-        // Suponiendo que req.dniToken contiene el ID del usuario
+
         const usuario = await User.findOne({
             where: { id: req.idToken }
         });
@@ -27,7 +27,7 @@ const esAdmin = async (req, res, next) => {
         next();
     } catch (error) {
         console.error(error);
-        return res.status(500).json({'msg':'Error al verificar el rol del usuario.'});
+        return res.status(500).json({'msg':'Error al verificar el rol del usuario.', 'error': error.message});
     }
 };
 

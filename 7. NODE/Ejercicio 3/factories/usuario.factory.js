@@ -1,11 +1,11 @@
 const bcrypt = require('bcrypt');
 const { faker, fakerES } = require('@faker-js/faker');
 
-const genUsers = async (ctos = 1) => { // ctos = cantidad de usuarios a generar
+const genUsers = async (ctos = 1) => { 
 
     let usersGen = []
     for(let i = 1; i <= ctos; i++) {
-        const password = await bcrypt.hash('1234', 10);
+        const password = await bcrypt.hash('1234', 10); //ENCRIPTACIÓN CONTRASEÑA
         let u = 
             {
                 nombre: faker.person.firstName(),

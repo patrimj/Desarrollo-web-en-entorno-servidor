@@ -1,6 +1,7 @@
 const { response, request } = require('express');
 const ConexionTarea = require('../database/tarea.conexion');
-const { validarJWT } = require('../middlewares/validarJWT');
+
+// RUTAS PROGRAMADOR
 
 //LISTAR TAREAS LIBRES
 const listarTareasLibres = (req = request, res = response) => {
@@ -18,8 +19,6 @@ const listarTareasLibres = (req = request, res = response) => {
 }
 
 //ASIGNAR TAREA
-//router.put('/tarea/asignar/:id', validarJWT, controladorTarea.asignarTarea);
-
 const asignarTarea = (req = request, res = response) => {
     const conx = new ConexionTarea();
     const id = req.params.id;
@@ -37,8 +36,6 @@ const asignarTarea = (req = request, res = response) => {
 }
 
 //QUITARSE TAREA QUE TENGA MI ID ES DECIR QUE ESTÉ ASIGNADA A MI
-//router.put('/tarea/desasignar/:id', controladorTarea.desasignarTarea);
-
 const desasignarTarea = (req = request, res = response) => {
     const conx = new ConexionTarea();
     const id = req.params.id;
@@ -55,27 +52,23 @@ const desasignarTarea = (req = request, res = response) => {
         });
 }
 
-
 //LISTAR TAREAS ASIGNADAS
-//router.get('/tareas/asignadas', controladorTarea.listarTareasAsignadas);
-
 const listarTareasAsignadas = (req = request, res = response) => {
     const conx = new ConexionTarea();
     const id_usuario = req.idToken;
 
     conx.listarTareasAsignadas(id_usuario)
         .then(msg => {
-            console.log('Listado correcto!');
+            console.log('Tareas asignadas!');
             res.status(200).json(msg);
         })
         .catch(err => {
             console.log('No hay registros');
             res.status(200).json({ 'msg': 'No se han encontrado registros' });
+            console.log(id_usuario);
         });
 }
 // CONSULTAR TAREA ASIGNADA
-//router.get('/tarea/asignada/:id', controladorTarea.consultarTareaAsignada);
-
 const consultarTareaAsignada = (req = request, res = response) => {
     const conx = new ConexionTarea();
     const id = req.params.id;
@@ -83,7 +76,7 @@ const consultarTareaAsignada = (req = request, res = response) => {
 
     conx.consultarTareaAsignada(id, id_usuario)
         .then(msg => {
-            console.log('Listado correcto!');
+            console.log('Tarea asignada');
             res.status(200).json(msg);
         })
         .catch(err => {
@@ -92,15 +85,13 @@ const consultarTareaAsignada = (req = request, res = response) => {
         });
 }
 
-
 //LISTAR TODAS LAS TAREAS
-//router.get('/tareas', controladorTarea.listarTareas);
 const listarTareas = (req = request, res = response) => {
     const conx = new ConexionTarea();
 
     conx.listarTareas()
         .then(msg => {
-            console.log('Listado correcto!');
+            console.log('Tareas!');
             res.status(200).json(msg);
         })
         .catch(err => {
@@ -112,46 +103,26 @@ const listarTareas = (req = request, res = response) => {
 // RUTAS ADMIN
 
 ///CREAR TAREA
-/*router.post('/tarea/crear',
-    [
-        check('descripcion', 'La descripción es obligatoria').not().isEmpty(),
-        check('dificultad', 'La dificultad es obligatoria').not().isEmpty(),
-        check ('horas_previstas', 'Las horas previstas son obligatorias').not().isEmpty(),
-        check ('horas_realizadas', 'Las horas realizadas son obligatorias').not().isEmpty(),
-        check ('porcentaje_realizacion', 'El porcentaje de realización es obligatorio').not().isEmpty(),
-        check ('completada', 'El campo completada es obligatorio').not().isEmpty(),
-    ], controladorTarea.crearTarea);*/
+const crearTarea = (req = request, res = response) => {
+    const conx = new ConexionTarea();
 
-    const crearTarea = (req = request, res = response) => {
-        const conx = new ConexionTarea();
-
-            conx.crearTarea(req.body.descripcion, req.body.dificultad, req.body.horas_previstas, req.body.horas_realizadas, req.body.porcentaje_realizacion, req.body.completada)
-            .then(msg => {
-                console.log('Tarea creada correctamente!');
-                res.status(200).json(msg);
-            })
-            .catch(err => {
-                console.log('No se ha podido crear la tarea');
-                res.status(200).json({ 'msg': 'No se ha podido crear la tarea' });
-            });
-    }
+    conx.crearTarea(req.body)
+        .then(msg => {
+            console.log('Tarea creada correctamente!');
+            res.status(200).json(msg);
+        })
+        .catch(err => {
+            console.log('No se ha podido crear la tarea');
+            res.status(200).json({ 'msg': 'No se ha podido crear la tarea' });
+        });
+}
 
 //MODIFICAR TAREA 
-/*router.put('/tarea/modificar/:id',
-    [
-        check('descripcion', 'La descripción es obligatoria').not().isEmpty(),
-        check('dificultad', 'La dificultad es obligatoria').not().isEmpty(),
-        check ('horas_previstas', 'Las horas previstas son obligatorias').not().isEmpty(),
-        check ('horas_realizadas', 'Las horas realizadas son obligatorias').not().isEmpty(),
-        check ('porcentaje_realizacion', 'El porcentaje de realización es obligatorio').not().isEmpty(),
-        check ('completada', 'El campo completada es obligatorio').not().isEmpty(),
-    ], controladorTarea.modificarTarea);*/
-
 const modificarTarea = (req = request, res = response) => {
     const conx = new ConexionTarea();
     const id = req.params.id;
 
-    conx.modificarTarea(id, req.body.descripcion, req.body.dificultad, req.body.horas_previstas, req.body.horas_realizadas, req.body.porcentaje_realizacion, req.body.completada)
+    conx.modificarTarea(id, req.body)
         .then(msg => {
             console.log('Tarea modificada correctamente!');
             res.status(200).json(msg);
@@ -163,8 +134,6 @@ const modificarTarea = (req = request, res = response) => {
 }
 
 //ELIMINAR TAREA
-//router.delete('/tarea/eliminar/:id', controladorTarea.eliminarTarea);
-
 const eliminarTarea = (req = request, res = response) => {
     const conx = new ConexionTarea();
     const id = req.params.id;
@@ -181,8 +150,6 @@ const eliminarTarea = (req = request, res = response) => {
 }
 
 //ASIGNAR TAREA A USUARIO
-//router.put('/tarea/asignar/:id/:id_usuario', controladorTarea.asignarTarea);
-
 const asignarTareaAUsuario = (req = request, res = response) => {
     const conx = new ConexionTarea();
     const id = req.params.id;
@@ -200,15 +167,13 @@ const asignarTareaAUsuario = (req = request, res = response) => {
 }
 
 // VER TAREAS PROGRAMADOR
-//router.get('/tareas/programador/:id_usuario', controladorTarea.verTareasProgramador);
-
 const verTareasProgramador = (req = request, res = response) => {
     const conx = new ConexionTarea();
     const id_usuario = req.params.id_usuario;
 
     conx.verTareasProgramador(id_usuario)
         .then(msg => {
-            console.log('Listado correcto!');
+            console.log('Tareas programador!');
             res.status(200).json(msg);
         })
         .catch(err => {
@@ -217,15 +182,13 @@ const verTareasProgramador = (req = request, res = response) => {
         });
 }
 
-// VER TODAS LAS TAREAS REALIZADAS // el atributo compeltada es true
-//router.get('/tareas/realizadas', controladorTarea.verTareasRealizadas);
-
+// VER TODAS LAS TAREAS REALIZADAS 
 const verTareasRealizadas = (req = request, res = response) => {
     const conx = new ConexionTarea();
 
     conx.verTareasRealizadas()
         .then(msg => {
-            console.log('Listado correcto!');
+            console.log('Tareas realizadas!');
             res.status(200).json(msg);
         })
         .catch(err => {
@@ -233,14 +196,14 @@ const verTareasRealizadas = (req = request, res = response) => {
             res.status(200).json({ 'msg': 'No se han encontrado registros' });
         });
 }
-// VER TODAS LAS TAREAS PENDIENTES // el atributo compeltada es false
-//router.get('/tareas/pendientes', controladorTarea.verTareasPendientes);
+
+// VER TODAS LAS TAREAS PENDIENTES 
 const verTareasPendientes = (req = request, res = response) => {
     const conx = new ConexionTarea();
 
     conx.verTareasPendientes()
         .then(msg => {
-            console.log('Listado correcto!');
+            console.log('Tareas pendientes!');
             res.status(200).json(msg);
         })
         .catch(err => {
@@ -249,15 +212,13 @@ const verTareasPendientes = (req = request, res = response) => {
         });
 }
 
-// VER RANKING DE TAREAS // sacar los usuarios que más tareas terminadas tiene a su id
-//router.get('/ranking', controladorTarea.verRanking);
-
+// VER RANKING DE TAREAS 
 const ranking = (req = request, res = response) => {
     const conx = new ConexionTarea();
 
     conx.ranking()
         .then(msg => {
-            console.log('Listado correcto!');
+            console.log('Ranking!');
             res.status(200).json(msg);
         })
         .catch(err => {

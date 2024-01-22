@@ -20,8 +20,6 @@ class TareaConexion {
     // RUTAS PROGRAMADOR
 
     //LISTAR TAREAS LIBRES
-    //router.get('/tareas/libres', controladorTarea.listarTareasLibres);
-
     listarTareasLibres = async () => {
         let resultado = [];
         this.conectar();
@@ -39,17 +37,21 @@ class TareaConexion {
     }
 
     //ASIGNAR TAREA QUE NO ESTÉ ASIGNADA
-    //router.put('/tarea/asignar/:id', controladorTarea.asignarTarea);
-
     asignarTarea = async (id_tarea, id_usuario) => {
         let resultado = 0;
         this.conectar();
         try {
-            const tareaAsignada = await models.Tarea_Asignada.create({
-                id_tarea: id_tarea,
+            const tareaAsignada = await models.Tarea_Asignada.update({
                 id_usuario: id_usuario
+            }, {
+                where: {
+                    id_tarea: id_tarea
+                }
             });
-            resultado = 1;
+
+            if (tareaAsignada[0] !== 0) {
+                resultado = 1;
+            }
         } catch (error) {
             if (error instanceof Sequelize.UniqueConstraintError) {
                 console.log(`La tarea ${id_tarea} ya está asignada al usuario ${id_usuario}.`);
@@ -65,28 +67,27 @@ class TareaConexion {
 
 
     //QUITARSE TAREA QUE TENGA MI ID ES DECIR QUE ESTÉ ASIGNADA A MI
-    //router.put('/tarea/desasignar/:id', controladorTarea.desasignarTarea);
     desasignarTarea = async (id_tarea, id_usuario) => {
         this.conectar();
-        let resultado = await models.Tarea_Asignada.findOne({
+        let resultado = await models.Tarea_Asignada.update({
+            id_usuario: null
+        }, {
             where: {
                 id_tarea: id_tarea,
                 id_usuario: id_usuario
             }
         });
-        if (!resultado) {
+
+        if (resultado[0] === 0) {
             this.desconectar();
-            throw error;
+            throw new Error('No se encontró la tarea asignada al usuario especificado.');
         }
-        await resultado.destroy();
+
         this.desconectar();
         return resultado;
     }
 
-
     //LISTAR TODAS LAS TAREAS ASIGNADAS a mi id
-    //router.get('/tareas/asignadas', controladorTarea.listarTareasAsignadas);
-
     listarTareasAsignadas = async (id_usuario) => {
         let resultado = [];
         this.conectar();
@@ -104,8 +105,6 @@ class TareaConexion {
     }
 
     // CONSULTAR TAREA ASIGNADA a mi id
-    //router.get('/tarea/asignada/:id', controladorTarea.consultarTareaAsignada);
-
     consultarTareaAsignada = async (id_tarea, id_usuario) => {
         let resultado = [];
         this.conectar();
@@ -124,8 +123,6 @@ class TareaConexion {
     }
 
     //LISTAR TODAS LAS TAREAS
-    //router.get('/tareas', controladorTarea.listarTareas);
-
     listarTareas = async () => {
         let resultado = [];
         this.conectar();
@@ -144,16 +141,6 @@ class TareaConexion {
     // RUTAS ADMIN
 
     ///CREAR TAREA
-    /*router.post('/tarea/crear',
-        [
-            check('descripcion', 'La descripción es obligatoria').not().isEmpty(),
-            check('dificultad', 'La dificultad es obligatoria').not().isEmpty(),
-            check ('horas_previstas', 'Las horas previstas son obligatorias').not().isEmpty(),
-            check ('horas_realizadas', 'Las horas realizadas son obligatorias').not().isEmpty(),
-            check ('porcentaje_realizacion', 'El porcentaje de realización es obligatorio').not().isEmpty(),
-            check ('completada', 'El campo completada es obligatorio').not().isEmpty(),
-        ], controladorTarea.crearTarea);*/
-
     crearTarea = async (body) => {
         try {
             this.conectar();
@@ -163,21 +150,11 @@ class TareaConexion {
         } catch (error) {
             this.desconectar();
             console.error('Error al crear la tarea:', error);
-            throw error; // Lanza el error para que pueda ser manejado por el llamador
+            throw error;
         }
     }
 
     //MODIFICAR TAREA 
-    /*router.put('/tarea/modificar/:id',
-        [
-            check('descripcion', 'La descripción es obligatoria').not().isEmpty(),
-            check('dificultad', 'La dificultad es obligatoria').not().isEmpty(),
-            check ('horas_previstas', 'Las horas previstas son obligatorias').not().isEmpty(),
-            check ('horas_realizadas', 'Las horas realizadas son obligatorias').not().isEmpty(),
-            check ('porcentaje_realizacion', 'El porcentaje de realización es obligatorio').not().isEmpty(),
-            check ('completada', 'El campo completada es obligatorio').not().isEmpty(),
-        ], controladorTarea.modificarTarea);*/
-
     modificarTarea = async (id, body) => {
         this.conectar();
         let resultado = await models.Tarea.findByPk(id);
@@ -189,9 +166,8 @@ class TareaConexion {
         this.desconectar();
         return resultado;
     }
-    //ELIMINAR TAREA
-    //router.delete('/tarea/eliminar/:id', controladorTarea.eliminarTarea);
 
+    //ELIMINAR TAREA
     eliminarTarea = async (id) => {
         this.conectar();
         let resultado = await models.Tarea.findByPk(id);
@@ -203,9 +179,8 @@ class TareaConexion {
         this.desconectar();
         return resultado;
     }
-    //ASIGNAR TAREA A USUARIO
-    //router.put('/tarea/asignar/:id/:id_usuario', controladorTarea.asignarTarea);
 
+    //ASIGNAR TAREA A USUARIO
     asignarTareaUsuario = async (id_tarea, id_usuario) => {
         let resultado = 0;
         this.conectar();
@@ -227,9 +202,8 @@ class TareaConexion {
         }
         return resultado;
     }
-    // VER TAREAS PROGRAMADOR
-    //router.get('/tareas/programador/:id_usuario', controladorTarea.verTareasProgramador);
 
+    // VER TAREAS PROGRAMADOR
     verTareasProgramador = async (id_usuario) => {
         let resultado = [];
         this.conectar();
@@ -245,9 +219,8 @@ class TareaConexion {
         this.desconectar();
         return resultado;
     }
-    // VER TODAS LAS TAREAS REALIZADAS // el atributo compeltada es true
-    //router.get('/tareas/realizadas', controladorTarea.verTareasRealizadas);
 
+    // VER TODAS LAS TAREAS REALIZADAS
     verTareasRealizadas = async () => {
         let resultado = [];
         this.conectar();
@@ -263,9 +236,8 @@ class TareaConexion {
         this.desconectar();
         return resultado;
     }
-    // VER TODAS LAS TAREAS PENDIENTES // el atributo compeltada es false
-    //router.get('/tareas/pendientes', controladorTarea.verTareasPendientes);
 
+    // VER TODAS LAS TAREAS PENDIENTES 
     verTareasPendientes = async () => {
 
         let resultado = [];
@@ -283,9 +255,7 @@ class TareaConexion {
         return resultado;
     }
 
-
     // VER RANKING DE TAREAS // sacar los usuarios que más tareas terminadas tiene a su id
-    //router.get('/ranking', controladorTarea.verRanking);
     ranking = async () => {
         let resultado = [];
         this.conectar();
