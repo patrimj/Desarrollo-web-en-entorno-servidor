@@ -1,8 +1,10 @@
 const { response, request } = require('express');
 const ConexionUsuario = require('../database/usuario.conexion');
+const { generarJWT } = require('../helpers/jwt');
 
-//LOGIN
-const login = (req = request, res = response) => {
+//LOGIN SIN TOKEN 
+
+/*const login = (req = request, res = response) => {
     const conx = new ConexionUsuario();
 
     conx.login(req.body.email, req.body.password)
@@ -15,6 +17,34 @@ const login = (req = request, res = response) => {
             console.log(err);
             res.status(203).json(err);
         })
+}*/
+
+const login =  (req, res = response) => {
+    const {email, password} = req.body;
+    try{
+        //Verificar si existe el usuario.
+        const conx = new ConexionUsuario();
+        u = conx.login(email, password)    
+            .then( usu => {
+                console.log('Usuario correcto!  ' + usu[0].id);
+                const token = generarJWT(usu[0].id)
+                console.log(usu)
+                console.log(token);
+                res.status(200).json({usu, token});
+            })
+            .catch( err => {
+                console.log('No hay registro de ese usuario.');
+                res.status(500).json({'msg':'Login incorrecto.'});
+            });
+            
+
+        //res.status(200).json({'msg':'Login ok', DNI, Clave});
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).json({'msg':'Error en el servidor.'});
+    }
+    
 }
 
 // REGISTRARSE

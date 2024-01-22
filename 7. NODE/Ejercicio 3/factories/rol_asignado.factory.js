@@ -9,11 +9,20 @@ const genRolesAsignados = async (ctos = 1) => {
 
     // para no se repitan las combinaciones
     let datos = [];
-    for (let rol of roles) {
-        for (let usuario of usuarios) {
-            datos.push({ id_rol: rol.id, id_usuario: usuario.id }); // por cada rol y usuario se crea una combinacion
+    let asignaciones = {}; 
+
+    for (let i = 0; i < usuarios.length; i++) {
+        // Primera combinación: usuario con el primer rol
+        datos.push({ id_rol: roles[1].id, id_usuario: usuarios[i].id });
+        asignaciones[usuarios[i].id] = [roles[1].id]; //guardamos la asignación
+
+        // Segunda combinación: usuario con el segundo rol, si existe y si Math.random() es mayor que 0.5
+        if (roles.length > 1 && Math.random() > 0.5 && !asignaciones[usuarios[i].id].includes(roles[0].id)) { 
+            datos.push({ id_rol: roles[0].id, id_usuario: usuarios[i].id });
+            asignaciones[usuarios[i].id].push(roles[0].id);
         }
     }
+
 
     // mezclamos pero no repetimos
     datos.sort(() => Math.random());
@@ -23,9 +32,12 @@ const genRolesAsignados = async (ctos = 1) => {
         if (i >= datos.length) {
             break;
         }
-        rolAsignadoGen.push(Rol_Asignado.create(datos[i])) 
+        let rolAsignado = datos[i];
+        rolAsignado.createdAt = new Date();
+        rolAsignado.updatedAt = new Date();
+        rolAsignadoGen.push(rolAsignado);
     }
-    return Promise.all(rolAsignadoGen); 
+    return rolAsignadoGen;
 }
 
 module.exports = {

@@ -67,7 +67,7 @@ class UsuarioConexion{
             this.desconectar();
             throw error;
         }
-        await resultado.update(password);
+        await resultado.update({password: password});
         this.desconectar();
         return resultado;
     }

@@ -1,5 +1,7 @@
 'use strict';
 
+const { genTareas } = require('../factories/tarea.factory');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
@@ -12,6 +14,8 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+   const tarea = await genTareas(5);
+    await queryInterface.bulkInsert('tareas', tarea, {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -21,5 +25,6 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+      await queryInterface.bulkDelete('tareas', null, {});
   }
 };

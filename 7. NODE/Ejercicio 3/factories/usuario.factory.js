@@ -16,7 +16,7 @@ const genUsers = async (ctos = 1) => { // ctos = cantidad de usuarios a generar
             }
             usersGen.push(u)
     }
-    return Promise.all(usersGen);
+    return usersGen;
 }
 
 module.exports = {

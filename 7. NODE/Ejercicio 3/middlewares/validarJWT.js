@@ -10,9 +10,9 @@ const validarJWT = (req , res , next) => {  //Estas asignaciones son necesarias 
 
     try {
         
-        const {uid} = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
-        req.dniToken = uid;
-        console.log(uid);
+        const {id} = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+        req.idToken = id;
+        console.log(id);
         console.log(token);
         next();
         

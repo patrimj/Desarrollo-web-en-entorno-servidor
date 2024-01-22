@@ -1,4 +1,5 @@
 'use strict';
+const { genRolesAsignados } = require('../factories/rol_asignado.factory');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -12,6 +13,8 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
+   const rolAsig = await genRolesAsignados(4);
+    await queryInterface.bulkInsert('rol_asignados', rolAsig, {});
   },
 
   async down (queryInterface, Sequelize) {
@@ -21,5 +24,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    await queryInterface.bulkDelete('rol_asignados', null, {});
   }
+
 };
