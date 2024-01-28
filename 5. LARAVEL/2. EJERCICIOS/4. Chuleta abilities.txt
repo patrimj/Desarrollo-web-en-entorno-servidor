@@ -1,0 +1,24 @@
+Creación de tokens con abilities:
+//$success['token'] =  $auth->createToken('LaravelSanctumAuth')->plainTextToken;
+            //$success['token'] =  $auth->createToken('access_token',["read"])->plainTextToken;
+            //$success['token'] =  $auth->createToken('access_token',["create","read"])->plainTextToken;
+            $success['token'] =  $auth->createToken('access_token',["create","read","modify"])->plainTextToken;
+
+
+Middlewares:
+$user = $request->user();
+         if ($user->tokenCan("create")) {
+            return $next($request);
+         }
+         else {
+             return response()->json(["success"=>false, "message" => "No autorizado"],202);
+         }
+
+Rutas:
+Route::middleware('auth:sanctum')->group( function () {
+    Route::get('partes', [ParteController::class,'index'])->middleware('midGet');
+    Route::post('parte', [ParteController::class,'store'])->middleware(['midCreate','midModify']);
+    Route::get('parte/{id}', [ParteController::class,'show']);
+    Route::put('parte/{id}', [ParteController::class,'update']);
+    Route::delete('parte/{id}', [ParteController::class,'destroy']);
+});

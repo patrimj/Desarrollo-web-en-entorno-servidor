@@ -1,0 +1,54 @@
+php artisan migrate --> Migra todas.
+php artisan migrate:rollback --> Hace un rollback de la última migration.
+php artisan migrate:reset --> Rollback de todas.
+php artisan migrate --path=/app/database/migrations/my_migrations
+rollback --> la última migration
+reset --> todas las migrations
+refresh --> rollback más migrate
+
+php artisan make:migration create_profesores_table
+Schema::create('profesores', function (Blueprint $table) {
+            $table->id()->unique();
+            $table->string('nombre');
+            $table->string('cargo');
+            $table->integer('edad');
+            $table->string('departamento');
+            $table->text('observaciones');
+            $table->timestamps();
+        });
+
+php artisan make:migration create_partes_table
+Schema::create('partes', function (Blueprint $table) {
+            $table->id()->unique();
+            $table->string('alumno');
+            $table->string('gravedad');
+            $table->unsignedBigInteger('idprofesor');
+            $table->foreign('idprofesor')->references('id')->on('profesores')->onDelete('cascade');
+            $table->text('observaciones');
+            $table->timestamps();
+        });
+        
+php artisan migrate:status --> Estado
+php artisan migrate --path=database/migrations/2023_10_24_181853_create_profesores_table.php  --> Migrar solo uno.
+php artisan migrate:rollback --path=database/migrations/2023_10_24_181859_create_partes_table.php
+php artisan migrate:rollback --step=5 --> Hace rollback de la migración indicada en la tabla Migrations.
+
+
+1. Hemos creado la tabla vacía en la bbdd en env añadido la bbdd su nombre
+2. php artisan migrate
+3. php artisan make:migration create_profesores_table
+4. En migrations > añadido Schema a profesores
+5. Mirar manual
+6. En migrations > añadido Schema a partes
+7. $table->foreign('idprofesor')->references('id')->on('profesores')->onDelete('cascade');  // una foreign key
+- campo clave: unique
+- 2 campos claves: $table-> unique ('valor1', 'valor2') y quitar los unique de arriba
+- unsignedBigInteger: coge el mismo signo al ser foreign
+8. Php atrasan mígate --> lanza todas, incluso las nuevas
+9.  php artisan migrate --path=database/migrations/2023_10_30_080655_create_partes_table.php
+10.  php artisan migrate --path=database/migrations/2023_10_30_080641_create_profesores_table.php
+
+EN EL PIEDRA PAPEL TIJERA
+- crear una bbdd aparte, hacemos la migrations
+- luego volver a poner la que tenia
+

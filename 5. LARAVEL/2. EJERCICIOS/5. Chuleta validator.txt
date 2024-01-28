@@ -1,0 +1,63 @@
+Usuario:
+Migration User:
+$table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->integer('edad');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+            
+Modelo User:
+ protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'edad'
+    ];
+    
+Validator User:
+$input = $request->all();
+        $messages = [
+            'unique' => 'Ese correo ya existe en la bd',
+            'email' => 'El campo no se ajusta a un correo estándar',
+            'same' => 'Los campos :password y :confirm_password deben coincidir',
+            'max' => 'El campo se excede del tamaño máximo',
+            'between' => 'El campo :edad no está entre :18,100'
+        ];
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:20',
+            'email' => 'required|email|max:255|unique:users', //Con esto evitamos que ocurra el error de la clave duplicada.
+            'password' => 'required',
+            'confirm_password' => 'required|same:password',
+            'edad' => 'numeric|integer|between:18,90'
+        ], $messages);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(),202);
+        }
+
+
+
+
+Validator parte:
+$input = $request->all();
+        $messages = [
+            'required' => 'Campo obligatorio',
+            'gravedad' => [
+                'in' => 'El campo :gravedad debe estar entre las siguientes opciones: :Leve,Destierro,Pasar por la quilla',
+            ],
+            'causa' => [
+                'in' => 'El campo :causa debe ser uno de los siguientes valores: :Nada,Todo',
+            ],
+        ];
+        $validator = Validator::make($input, [
+            'nombre' => 'required',
+            'causa' => 'required | in :Nada,Todo',
+            'gravedad' => 'required | in: :Leve,Destierro,Pasar por la quilla'
+            // 'observaciones' => 'required | string | max:255'
+        ],$messages);
+
+
+- validator

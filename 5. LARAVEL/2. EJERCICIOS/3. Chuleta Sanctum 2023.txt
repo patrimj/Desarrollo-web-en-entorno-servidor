@@ -1,0 +1,270 @@
+1.- Configurar .env
+
+2.- Descomentar en app/Http/Kernel.php, la línea:
+'api' => [
+    \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+],
+
+3.- php artisan migrate --> para crear las tablas de usuario.
+
+4.- Comprobar que esta línea use "Laravel\Sanctum\HasApiTokens;" está en User.
+
+5.- Hacemos la tabla donde irán los datos de ejemplo, en nuestro caso:
+php artisan make:model Parte -m    --> Con la -m crea también la migration.
+
+6.- En el modelo:
+class Parte extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'nombre',
+        'causa',
+        'gravedad'
+    ];
+}
+
+7.- En la migration:
+class CreatePartesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('partes', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->text('causa'); 
+            $table->text('gravedad');
+            $table->timestamps();
+        });
+    }
+
+8.-  php artisan migrate   -> Para crear la tabla "partes".
+
+9.- Hacemos los controladores, uno para la autorización y otro para el CRUD.
+php artisan make:controller API/AuthController
+php artisan make:controller API/ParteController
+
+
+
+10.- Añadimos el código del controlador para el parte.
+<?php
+
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
+use App\Models\Parte;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class ParteController extends Controller
+{
+    public function index()
+    {
+        $partes = Parte::all();
+        return response()->json($partes,200);
+    }
+
+
+    public function store(Request $request)
+    {
+        $input = $request->all();
+        $validator = Validator::make($input, [
+            'nombre' => 'required',
+            'causa' => 'required'
+        ]);
+        if($validator->fails()){
+            return response()->json("Error en los datos",204);
+        }
+        $parte = Parte::create($input);
+        return response()->json(["success"=>true,"data"=>$parte, "message" => "Created"]);
+    }
+
+
+    public function show($id)
+    {
+        $parte = Parte::find($id);
+        if (is_null($parte)) {
+            return response()->json("Parte no encontrado",202);
+        }
+        return response()->json(["success"=>true,"data"=>$parte, "message" => "Retrieved"]);
+    }
+
+
+    public function update($id, Request $request)
+    {
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'nombre' => 'required',
+            'causa' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return response()->json("Error en los datos",204);
+        }
+        $parte = Parte::find($id);
+        $parte->nombre = $input['nombre'];
+        $parte->causa = $input['causa'];
+        $parte->save();
+
+        return response()->json(["success"=>true,"data"=>$parte, "message" => "Updated"]);
+    }
+
+    public function destroy($id)
+    {
+        $parte = Parte::find($id);
+        $parte->delete();
+        return response()->json(["success"=>true,"data"=>$parte, "message" => "Deleted"]);
+    }
+}
+
+
+
+
+11.- Añadimos el código del controlador para el Auth.
+<?php
+
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+class AuthController extends Controller
+{
+public function login(Request $request)
+    {
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            $auth = Auth::user();
+            //return $auth;
+            $success['token'] =  $auth->createToken('LaravelSanctumAuth')->plainTextToken;
+            $success['name'] =  $auth->name;
+
+            return response()->json(["success"=>true,"data"=>$success, "message" => "User logged-in!"]);
+        }
+        else{
+            return response()->json("Unauthorised",204);
+        }
+    }
+
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirm_password' => 'required|same:password',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(),202);
+        }
+
+        $input = $request->all();
+        $input['password'] = bcrypt($input['password']);
+        $user = User::create($input);
+        $success['token'] =  $user->createToken('LaravelSanctumAuth')->plainTextToken;
+        $success['name'] =  $user->name;
+
+        return response()->json(["success"=>true,"data"=>$success, "message" => "User successfully registered!"]);
+    }
+    
+     /**
+     * Por defecto los tokens de Sanctum no expiran. Se puede modificar esto añadiendo una cantidad en minutos a la variable 'expiration' en el archivo de config/sanctum.php.
+     */
+     public function logout(Request $request)
+    {
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            $cantidad = Auth::user()->tokens()->delete();
+            return response()->json(["success"=>true, "message" => "Tokens Revoked: ".$cantidad],200);
+        }
+        else {
+            return response()->json("Unauthorised",204);
+        }
+
+    }
+    
+
+12.- Añadimos las rutas.
+Route::middleware('auth:sanctum')->group( function () {
+    Route::get('partes', [ParteController::class,'index']);
+    Route::post('parte', [ParteController::class,'store']);
+    Route::get('parte/{id}', [ParteController::class,'show']);
+    Route::put('parte/{id}', [ParteController::class,'update']);
+    Route::delete('parte/{id}', [ParteController::class,'destroy']);
+});
+
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
+Route::post('register', [AuthController::class, 'register']);
+
+Probamos con ThunderClient.
+
+
+
+--> php artisan serve
+
+http://127.0.0.1:8000/api/register
+- miraremos el modelo User.php y lo que haya en fillable name, email, password
+
+AuthController --> register --> 
+ $success['token'] =  $user->createToken('LaravelSanctumAuth')->plainTextToken;
+LaravelSanctumAuth puede ser lo que sea
+
+Va a devolver el nombre y el token 
+---- COPIAMOS EL TOKEN : 1|uPIIEBNWtg0S1gFdw4Ltxx8nV1wWnXMXS5j0GMH46175fb8b
+
+
+Vemos que cuando intentamos acceder a una ruta no autorizada salta un error porque trata de llevarnos a la ruta login, que no existe.
+PAra evitar esto:
+- en el middleware Auhtenticate:
+//return $request->expectsJson() ? null : route('login');
+return $request->expectsJson() ? null : route('nologin');
+
+Y creamos la ruta no login en la API:
+Route::get('', function () {
+    return response()->json("No autorizado",203);
+})->name('nologin');
+        
+Me salta un error que me dicen que no tiene token
+- para meter el token 
+- en vez de body > Auth > bearer > pegamos el token > send
+
+Si ahora hacemos un login 
+http://127.0.0.1:8000/api/login --> post
+
+{
+"email":"carlos@gmail.com", 
+"password":"1234"
+}
+
+-- me devuelve otro token 
+
+public function login(Request $request)
+    {
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            $auth = Auth::user();
+            //return $auth;
+            $success['token'] =  $auth->createToken('LaravelSanctumAuth')->plainTextToken;
+            $success['name'] =  $auth->name;
+
+            return response()->json(["success"=>true,"data"=>$success, "message" => "User logged-in!"]);
+        }
+        else{
+            return response()->json("Unauthorised",204);
+        }
+    }
+
+
+
+*******en config > sanctum.php > expiration > 60 (1h)
+
+
