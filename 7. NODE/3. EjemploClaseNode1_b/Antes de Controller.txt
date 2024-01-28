@@ -1,0 +1,60 @@
+const express = require('express')
+const app = express()
+const port = 9090
+
+app.use(express.json())
+
+let valores = [1,2,3,4]
+
+app.get('/', (req, res)  => {
+  res.status(200).json({'msg' : 'Gestión del vector', 'valores' : valores})
+})
+
+app.get('/:id?', (req, res) => {
+    let indice = parseInt(req.params.id,10)
+    res.status(200).json({'msg' : 'Gestión del vector', 'pos' : parseInt(req.params.id,10), 'valor' : valores[indice]})
+  })
+
+app.delete('/:id', (req, res) => {
+    let indice = parseInt(req.params.id,10)
+    if (indice >= 0 && indice < valores.length){
+        valores.splice(indice, 1)
+        res.status(200).json({'msg' : 'Elemento borrado', 'valores' : valores})
+        console.log(valores)
+        }
+    else  {
+        res.status(200).json({'msg' : 'Error, posición no existe', 'valores' : valores})
+}
+})
+
+app.post('/', (req, res) => {
+    //res.status(200).json({'nombre' : req.body.nombre, 'edad' : req.body.edad})
+    let pos = req.body.posicion
+    let nuevoValor = req.body.valor
+
+    if (pos >= 0 && pos <= valores.length){
+        valores.splice(pos, 0, nuevoValor);
+        console.log(valores); 
+        res.status(200).json({'msg' : 'Elemento insertado', 'valores' : valores})
+     }
+     else {
+        console.log('Error, posición no existe');
+        res.status(200).json({'msg' : 'Error, posición no existe', 'valores' : valores})
+     }
+})
+
+app.put('/:id', (req, res) => {
+    let indice = parseInt(req.params.id,10)
+    if (indice >= 0 && indice < valores.length){
+        valores[indice] = req.body.valor
+        res.status(200).json({'msg' : 'Elemento modificado', 'valores' : valores})
+    }
+    else {
+        res.status(200).json({'msg' : 'Error, posición no existe', 'valores' : valores})
+    }
+
+})
+
+
+app.listen(port)
+console.log(`Servicio arrancado en ${port}`)
