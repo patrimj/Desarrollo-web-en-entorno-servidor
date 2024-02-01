@@ -118,11 +118,27 @@ const modificarUsuario = (req, res = response) => {
         });
 }
 
+const esAdmin = (req, res = response) => {
+    const conx = new ConexionUsuario();
+
+    conx.esAdmin(req.params.id_usuario)
+        .then(msg => {
+            console.log('los roles del usuario !');
+            res.status(200).json(msg);
+        })
+        .catch(err => {
+            console.log(err)
+            console.log('el usuario no se ha podiod encontrar');
+            res.status(200).json({ 'msg': 'No se han encontrado registros' });
+        });
+}
+
 module.exports = {
     login,
     registro,
     cambiarPassword,
     altaUsuario,
     bajaUsuario,
-    modificarUsuario
+    modificarUsuario,
+    esAdmin
 }

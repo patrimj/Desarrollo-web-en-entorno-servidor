@@ -1,0 +1,161 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Node Sequelize",
+    "dateExported": "2024-01-17T11:55:58.091Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "b9147685-c230-45b5-828d-069ee8ca7232",
+            "colId": "b1babd76-d8d7-4a22-a0f0-1979e2c3c719",
+            "containerId": "",
+            "name": "http://localhost:9090/1",
+            "url": "http://localhost:9090/api/usuarios/15",
+            "method": "DELETE",
+            "sortNum": 10000,
+            "created": "2024-01-16T08:07:06.294Z",
+            "modified": "2024-01-16T08:42:41.349Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxQSIsImlhdCI6MTcwNTI1Mjk1NywiZXhwIjoxNzA1MjY3MzU3fQ.5O52M5MbgWk2eN0Loz1F4z_-lQfF0AYqht-TArxtBQw"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "cf24b102-fc80-47b6-9f19-dc57a1a2012f",
+            "colId": "b1babd76-d8d7-4a22-a0f0-1979e2c3c719",
+            "containerId": "",
+            "name": "http://localhost:9090",
+            "url": "http://localhost:9090/api/usuarios",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-01-16T08:07:06.295Z",
+            "modified": "2024-01-16T08:14:31.316Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxQSIsInJvbCI6IkFkbWluIiwiaWF0IjoxNzA1MzA5ODA3LCJleHAiOjE3MDUzMjQyMDd9.4IV_ianFul7xHTI4Hcjy-l4OtKuxxG3-MeGGwSv2QlI"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "da997f91-093b-4c33-bb92-fac3373f2681",
+            "colId": "b1babd76-d8d7-4a22-a0f0-1979e2c3c719",
+            "containerId": "",
+            "name": "http://localhost:9090 Comments",
+            "url": "http://localhost:9090/api/comments",
+            "method": "GET",
+            "sortNum": 21250,
+            "created": "2024-01-16T08:12:50.871Z",
+            "modified": "2024-01-16T08:17:16.634Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxQSIsInJvbCI6IkFkbWluIiwiaWF0IjoxNzA1MzA5ODA3LCJleHAiOjE3MDUzMjQyMDd9.4IV_ianFul7xHTI4Hcjy-l4OtKuxxG3-MeGGwSv2QlI"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "86a8a980-ab21-4e5b-ae51-0ee4b264e81d",
+            "colId": "b1babd76-d8d7-4a22-a0f0-1979e2c3c719",
+            "containerId": "",
+            "name": "http://localhost:9090 Comments Copy",
+            "url": "http://localhost:9090/api/comments/2",
+            "method": "GET",
+            "sortNum": 21562.5,
+            "created": "2024-01-17T09:26:08.908Z",
+            "modified": "2024-01-17T11:55:02.512Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxQSIsInJvbCI6IkFkbWluIiwiaWF0IjoxNzA1MzA5ODA3LCJleHAiOjE3MDUzMjQyMDd9.4IV_ianFul7xHTI4Hcjy-l4OtKuxxG3-MeGGwSv2QlI"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "64a6339e-d483-4481-9489-6a6b41679a7d",
+            "colId": "b1babd76-d8d7-4a22-a0f0-1979e2c3c719",
+            "containerId": "",
+            "name": "http://localhost:9090 Roles id",
+            "url": "http://localhost:9090/api/usuarios/roles/1",
+            "method": "GET",
+            "sortNum": 21875,
+            "created": "2024-01-16T08:28:41.111Z",
+            "modified": "2024-01-17T11:52:01.872Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxQSIsInJvbCI6IkFkbWluIiwiaWF0IjoxNzA1MzA5ODA3LCJleHAiOjE3MDUzMjQyMDd9.4IV_ianFul7xHTI4Hcjy-l4OtKuxxG3-MeGGwSv2QlI"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "37d8e965-d797-49bb-a839-21e5cb66166f",
+            "colId": "b1babd76-d8d7-4a22-a0f0-1979e2c3c719",
+            "containerId": "",
+            "name": "http://localhost:9090",
+            "url": "http://localhost:9090/api/usuarios/12",
+            "method": "GET",
+            "sortNum": 22500,
+            "created": "2024-01-16T08:07:06.296Z",
+            "modified": "2024-01-16T08:17:17.953Z",
+            "headers": [
+                {
+                    "name": "x-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxQSIsImlhdCI6MTcwNTI1Mjk1NywiZXhwIjoxNzA1MjY3MzU3fQ.5O52M5MbgWk2eN0Loz1F4z_-lQfF0AYqht-TArxtBQw"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "30e0c3ee-02ab-4072-9e9f-a5f6db909533",
+            "colId": "b1babd76-d8d7-4a22-a0f0-1979e2c3c719",
+            "containerId": "",
+            "name": "http://localhost:9090",
+            "url": "http://localhost:9090/api/usuarios",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-01-16T08:07:06.297Z",
+            "modified": "2024-01-16T08:42:22.493Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"firstName\": \"Fulanito\",\n    \"lastName\": \"Fulanitez\",\n    \"email\": \"grijander@gmail.com\"\n  }",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "d085c155-333e-4811-8be1-3f450d481826",
+            "colId": "b1babd76-d8d7-4a22-a0f0-1979e2c3c719",
+            "containerId": "",
+            "name": "http://localhost:9090/3",
+            "url": "http://localhost:9090/api/usuarios/14",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2024-01-16T08:07:06.299Z",
+            "modified": "2024-01-16T08:43:22.248Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"firstName\": \"Menganito\",\n    \"lastName\": \"Menganitez\",\n    \"email\": \"naloquesea@gmail.com\"\n  }",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

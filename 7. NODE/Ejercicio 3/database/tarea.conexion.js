@@ -25,12 +25,6 @@ class TareaConexion {
         this.conectar();
         resultado = await models.Tarea.findAll({
             attributes: ['id', 'descripcion', 'dificultad', 'horas_previstas', 'horas_realizadas', 'porcentaje_realizacion', 'completada'],
-            include: [{
-                model: models.Tarea_Asignada,
-                as: 'tarea_asignada',
-                where: { id_usuario: null },
-                required: false
-            }]
         });
         this.desconectar();
         return resultado;
@@ -128,11 +122,6 @@ class TareaConexion {
         this.conectar();
         resultado = await models.Tarea.findAll({
             attributes: ['id', 'descripcion', 'dificultad', 'horas_previstas', 'horas_realizadas', 'porcentaje_realizacion', 'completada'],
-            include: [{
-                model: models.Tarea_Asignada,
-                as: 'tarea_asignada',
-                required: false
-            }]
         });
         this.desconectar();
         return resultado;
@@ -205,15 +194,14 @@ class TareaConexion {
 
     // VER TAREAS PROGRAMADOR
     verTareasProgramador = async (id_usuario) => {
+        console.log (id_usuario)
         let resultado = [];
         this.conectar();
-        resultado = await models.Tarea.findAll({
-            attributes: ['id', 'descripcion', 'dificultad', 'horas_previstas', 'horas_realizadas', 'porcentaje_realizacion', 'completada'],
+        resultado = await models.Tarea_Asignada.findAll({
+            where: { id_usuario: id_usuario },
             include: [{
-                model: models.Tarea_Asignada,
-                as: 'tarea_asignada',
-                where: { id_usuario: id_usuario },
-                required: true
+                model: models.Tarea,
+                as: 'tarea',
             }]
         });
         this.desconectar();
@@ -227,11 +215,6 @@ class TareaConexion {
         resultado = await models.Tarea.findAll({
             attributes: ['id', 'descripcion', 'dificultad', 'horas_previstas', 'horas_realizadas', 'porcentaje_realizacion', 'completada'],
             where: { completada: true },
-            include: [{
-                model: models.Tarea_Asignada,
-                as: 'tarea_asignada',
-                required: true
-            }]
         });
         this.desconectar();
         return resultado;
@@ -245,11 +228,6 @@ class TareaConexion {
         resultado = await models.Tarea.findAll({
             attributes: ['id', 'descripcion', 'dificultad', 'horas_previstas', 'horas_realizadas', 'porcentaje_realizacion', 'completada'],
             where: { completada: false },
-            include: [{
-                model: models.Tarea_Asignada,
-                as: 'tarea_asignada',
-                required: true
-            }]
         });
         this.desconectar();
         return resultado;

@@ -28,6 +28,8 @@ router.put('/perfil/password/:email', // CAMBIAR PASSWORD
         check('password', 'El password debe de ser más de 6 letras').isLength({ min: 6 }),
     ], midsJWT.validarJWT, controladorPersona.cambiarPassword);
 
+router.get('/rol/:id_usuario', controladorPersona.esAdmin); //SACAR ID DEL ROL_ASIGNADO
+
 //RUTAS ADMINISTRADOR
 
 router.post('/usuario/alta', // ALTA USUARIO

@@ -4,9 +4,9 @@ const { Sequelize, Op } = require('sequelize'); // Op es para los operadores de 
 const models = require('../models/index.js'); //Esto tiene acceso a todos los modelos., lo genera solo el sequelize-cli
 
 
-class UsuarioConexion{
-    
-    constructor(){
+class UsuarioConexion {
+
+    constructor() {
         this.conexion = new Conexion();
     }
 
@@ -40,8 +40,8 @@ class UsuarioConexion{
         let resultado = 0;
         this.conectar();
         try {
-            const usuarioNuevo = await  models.User.create(body); // solo crea los campos que le digo en el body
-            resultado = 1; 
+            const usuarioNuevo = await models.User.create(body); // solo crea los campos que le digo en el body
+            resultado = 1;
         } catch (error) {
             if (error instanceof Sequelize.UniqueConstraintError) {
                 console.log(`El email ${body.email} ya existe en la base de datos.`);
@@ -58,7 +58,7 @@ class UsuarioConexion{
     // CAMBIAR PASSWORD
     cambiarPassword = async (email, password) => {
         this.conectar();
-        let resultado = await  models.User.findOne({
+        let resultado = await models.User.findOne({
             where: {
                 email: email
             }
@@ -67,7 +67,23 @@ class UsuarioConexion{
             this.desconectar();
             throw error;
         }
-        await resultado.update({password: password});
+        await resultado.update({ password: password });
+        this.desconectar();
+        return resultado;
+    }
+
+    esAdmin = async (id_usuario) => {
+        this.conectar();
+        let resultado = await models.Rol_Asignado.findAll({
+            where: {
+                id_usuario: id_usuario
+            },
+            attributes: ['id_rol']
+        });
+        if (!resultado) {
+            this.desconectar();
+            throw error;
+        }
         this.desconectar();
         return resultado;
     }
@@ -77,8 +93,8 @@ class UsuarioConexion{
         let resultado = 0;
         this.conectar();
         try {
-            const usuarioNuevo = await  models.User.create(body); 
-            resultado = 1; 
+            const usuarioNuevo = await models.User.create(body);
+            resultado = 1;
         } catch (error) {
             if (error instanceof Sequelize.UniqueConstraintError) {
                 console.log(`El email ${body.email} ya existe en la base de datos.`);
@@ -95,7 +111,7 @@ class UsuarioConexion{
     // BAJA USUARIO
     bajaUsuario = async (id) => {
         this.conectar();
-        let resultado = await  models.User.findByPk(id);
+        let resultado = await models.User.findByPk(id);
         if (!resultado) {
             this.desconectar();
             throw error;
@@ -108,7 +124,7 @@ class UsuarioConexion{
     // MODIFICAR USUARIO
     modificarUsuario = async (id, body) => {
         this.conectar();
-        let resultado = await  models.User.findByPk(id);
+        let resultado = await models.User.findByPk(id);
         if (!resultado) {
             this.desconectar();
             throw error;

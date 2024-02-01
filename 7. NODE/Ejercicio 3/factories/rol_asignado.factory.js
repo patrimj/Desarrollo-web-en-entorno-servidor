@@ -1,3 +1,4 @@
+
 const { Rol_Asignado, Roles, User } = require('../models');
 
 const genRolesAsignados = async (ctos = 1) => { 

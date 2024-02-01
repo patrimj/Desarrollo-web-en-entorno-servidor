@@ -169,9 +169,8 @@ const asignarTareaAUsuario = (req = request, res = response) => {
 // VER TAREAS PROGRAMADOR
 const verTareasProgramador = (req = request, res = response) => {
     const conx = new ConexionTarea();
-    const id_usuario = req.params.id_usuario;
 
-    conx.verTareasProgramador(id_usuario)
+    conx.verTareasProgramador(req.params.id_usuario)
         .then(msg => {
             console.log('Tareas programador!');
             res.status(200).json(msg);
@@ -181,6 +180,8 @@ const verTareasProgramador = (req = request, res = response) => {
             res.status(200).json({ 'msg': 'No se han encontrado registros' });
         });
 }
+
+
 
 // VER TODAS LAS TAREAS REALIZADAS 
 const verTareasRealizadas = (req = request, res = response) => {

@@ -56,7 +56,7 @@ router.delete('/tarea/eliminar/:id', midsJWT.validarJWT,midsRoles.esAdmin, contr
 router.put('/tarea/asignar/:id/:id_usuario', midsJWT.validarJWT,midsRoles.esAdmin, controladorTarea.asignarTareaAUsuario);
 
 // VER TAREAS PROGRAMADOR
-router.get('/tareas/programador/:id_usuario', midsJWT.validarJWT,midsRoles.esAdmin, controladorTarea.verTareasProgramador);
+router.get('/tareas/programador/:id_usuario', controladorTarea.verTareasProgramador);
 
 // VER TODAS LAS TAREAS REALIZADAS
 router.get('/tareas/realizadas',midsJWT.validarJWT,midsRoles.esAdmin,  controladorTarea.verTareasRealizadas);
