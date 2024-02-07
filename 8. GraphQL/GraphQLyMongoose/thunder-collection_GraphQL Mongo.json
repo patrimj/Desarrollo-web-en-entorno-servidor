@@ -1,0 +1,207 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "GraphQL Mongo",
+    "dateExported": "2024-01-31T11:48:15.288Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "670ce04a-68e7-4fe8-907f-8ef966ead786",
+            "colId": "ea644a10-21ae-41de-8035-79e877a131dc",
+            "containerId": "",
+            "name": "get users GraphQL",
+            "url": "localhost:9080/graphql",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-01-30T12:35:02.589Z",
+            "modified": "2024-01-30T12:35:30.738Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query {\n personas {\n    id\n    nombre\n    edad\n }\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "d0befc7f-121d-4c87-996a-5e5958de90b1",
+            "colId": "ea644a10-21ae-41de-8035-79e877a131dc",
+            "containerId": "",
+            "name": "get/id  user GraphQL ",
+            "url": "localhost:9080/graphql",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-01-30T12:35:02.590Z",
+            "modified": "2024-01-31T11:15:59.388Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query {\n persona(pid: 1980) {\n    id\n    nombre\n    edad\n }\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "ee98eea3-92a3-468a-bb4e-3698b4737880",
+            "colId": "ea644a10-21ae-41de-8035-79e877a131dc",
+            "containerId": "",
+            "name": "post user GraphQL",
+            "url": "localhost:9080/graphql",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-01-30T12:35:02.591Z",
+            "modified": "2024-01-31T10:21:20.970Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation {\n agregarPersona(id:1980, nombre: \"Mig-31\", edad: 47) {\n    id\n    nombre\n    edad\n }\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "c2d0c03a-6884-47dd-8ac5-2f958631ba4d",
+            "colId": "ea644a10-21ae-41de-8035-79e877a131dc",
+            "containerId": "",
+            "name": "delete/id user GraphQL",
+            "url": "localhost:9080/graphql",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2024-01-30T12:35:02.592Z",
+            "modified": "2024-01-31T11:02:17.798Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation {\n eliminarPersona(id:1980)\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "3586b81a-aab1-471d-83d2-c86642e48c59",
+            "colId": "ea644a10-21ae-41de-8035-79e877a131dc",
+            "containerId": "",
+            "name": "update/id user GraphQL",
+            "url": "localhost:9080/graphql",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-01-30T12:35:02.593Z",
+            "modified": "2024-01-31T11:16:37.850Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation {\n actualizarPersona(id: 1980, nombre: \"Nuevowwerr Nombreerl\", edad: 243) \n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "67a568b6-07b3-4576-96d5-7827e8fca054",
+            "colId": "ea644a10-21ae-41de-8035-79e877a131dc",
+            "containerId": "",
+            "name": "get comments GraphQL",
+            "url": "localhost:9080/graphql",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2024-01-31T09:18:30.257Z",
+            "modified": "2024-01-31T09:21:53.142Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query {\n comentarios {\n    idU\n    comment\n }\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "0e55f21a-a1a7-44f7-a113-7615e07760ab",
+            "colId": "ea644a10-21ae-41de-8035-79e877a131dc",
+            "containerId": "",
+            "name": "get comments GraphQL 2",
+            "url": "localhost:9080/graphql",
+            "method": "POST",
+            "sortNum": 90000,
+            "created": "2024-01-31T09:23:07.493Z",
+            "modified": "2024-01-31T09:23:45.015Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query {\n comentarios {\n    idU\n    comment\n    likes\n    timestamp\n }\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "7d9e73d2-70f7-44ab-bafc-04812e5a92bb",
+            "colId": "ea644a10-21ae-41de-8035-79e877a131dc",
+            "containerId": "",
+            "name": "get comments asignados GraphQL",
+            "url": "localhost:9080/graphql",
+            "method": "POST",
+            "sortNum": 100000,
+            "created": "2024-01-31T11:19:28.643Z",
+            "modified": "2024-01-31T11:39:46.031Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query {\n comentariosAsignados {\n    _id\n    comentarios {\n        comment\n        likes\n    }\n }\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "e9eb9c8b-d0e9-4df7-9eb2-1f37078e4b7e",
+            "colId": "ea644a10-21ae-41de-8035-79e877a131dc",
+            "containerId": "",
+            "name": "get comments asignados/id GraphQL",
+            "url": "localhost:9080/graphql",
+            "method": "POST",
+            "sortNum": 110000,
+            "created": "2024-01-31T11:42:45.284Z",
+            "modified": "2024-01-31T11:47:51.253Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query {\n comentariosAsignadosA(id:2) {\n    _id\n    comentarios {\n        comment\n        likes\n    }\n }\n}"
+                }
+            },
+            "tests": []
+        }
+    ]
+}

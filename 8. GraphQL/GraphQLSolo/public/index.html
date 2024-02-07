@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cliente GraphQL</title>
+</head>
+<body>
+
+  <h1>Cliente GraphQL</h1>
+
+  <button onclick="obtenerPersonas()">Obtener Personas</button>
+  <button onclick="obtenerPersonaPorId()">Obtener Persona por ID</button>
+  <button onclick="agregarPersona()">Agregar Persona</button>
+  <button onclick="eliminarPersona()">Eliminar Persona</button>
+  <button onclick="actualizarPersona()">Actualizar Persona</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    async function enviarConsulta(query, variables = {}) {
+      try {
+        const response = await fetch('http://localhost:9090/graphql', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query,
+            variables,
+          }),
+        });
+
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error al enviar la consulta GraphQL:', error);
+        return { errors: [{ message: 'Error al enviar la consulta GraphQL' }] };
+      }
+    }
+
+    async function obtenerPersonas() {
+      const query = `
+        query {
+          personas {
+            id
+            nombre
+            edad
+          }
+        }
+      `;
+
+      const data = await enviarConsulta(query);
+      mostrarResultado(data);
+    }
+
+    async function obtenerPersonaPorId() {
+      const id = prompt('Ingrese el ID de la persona:');
+      const query = `
+        query($id: ID!) {
+          persona(id: $id) {
+            id
+            nombre
+            edad
+          }
+        }
+      `;
+
+      const variables = { id };
+      const data = await enviarConsulta(query, variables);
+      mostrarResultado(data);
+    }
+
+    async function agregarPersona() {
+      const nombre = prompt('Ingrese el nombre de la persona:');
+      const edad = prompt('Ingrese la edad de la persona:');
+      const query = `
+        mutation($nombre: String!, $edad: Int!) {
+          agregarPersona(nombre: $nombre, edad: $edad) {
+            id
+            nombre
+            edad
+          }
+        }
+      `;
+
+      const variables = { nombre, edad: parseInt(edad) };
+      const data = await enviarConsulta(query, variables);
+      mostrarResultado(data);
+    }
+
+    async function eliminarPersona() {
+      const id = prompt('Ingrese el ID de la persona a eliminar:');
+      const query = `
+        mutation($id: Int!) {
+          eliminarPersona(id: $id)
+        }
+      `;
+
+      const variables = { id: parseInt(id) };
+      const data = await enviarConsulta(query, variables);
+      mostrarResultado(data);
+    }
+
+    async function actualizarPersona() {
+      const id = prompt('Ingrese el ID de la persona a actualizar:');
+      const nombre = prompt('Ingrese el nuevo nombre de la persona:');
+      const edad = prompt('Ingrese la nueva edad de la persona:');
+      const query = `
+        mutation($id: Int!, $nombre: String, $edad: Int) {
+          actualizarPersona(id: $id, nombre: $nombre, edad: $edad) {
+            id
+            nombre
+            edad
+          }
+        }
+      `;
+
+      const variables = { id: parseInt(id), nombre, edad: parseInt(edad) };
+      const data = await enviarConsulta(query, variables);
+      mostrarResultado(data);
+    }
+
+    function mostrarResultado(data) {
+      const resultadoDiv = document.getElementById('resultado');
+
+      if (data.errors) {
+        resultadoDiv.innerHTML = `Error: ${JSON.stringify(data.errors, null, 2)}`;
+      } else {
+        resultadoDiv.innerHTML = JSON.stringify(data.data, null, 2);
+      }
+    }
+  </script>
+
+</body>
+</html>

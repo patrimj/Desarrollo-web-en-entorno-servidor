@@ -1,0 +1,133 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "GraphQL",
+    "dateExported": "2024-01-29T12:25:51.212Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "e649e9b1-9f94-4cec-b852-4ea08fbdba47",
+            "colId": "259aa200-d965-4f91-84a7-594d28ddcd15",
+            "containerId": "",
+            "name": "get",
+            "url": "localhost:9090/api",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-01-29T11:03:16.809Z",
+            "modified": "2024-01-29T11:29:15.715Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c88f2eeb-13e7-445f-8535-fcecf2a52c50",
+            "colId": "259aa200-d965-4f91-84a7-594d28ddcd15",
+            "containerId": "",
+            "name": "get GraphQL",
+            "url": "localhost:9090/graphql",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2024-01-29T12:03:21.926Z",
+            "modified": "2024-01-29T12:12:06.171Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query {\n personas {\n    id\n    nombre\n    edad\n }\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "b0191f28-8b18-458f-9961-cba6f8e7ece5",
+            "colId": "259aa200-d965-4f91-84a7-594d28ddcd15",
+            "containerId": "",
+            "name": "get/id GraphQL ",
+            "url": "localhost:9090/graphql",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2024-01-29T12:10:25.458Z",
+            "modified": "2024-01-29T12:21:18.635Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "query {\n persona(id: 4) {\n    id\n    nombre\n    edad\n }\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "8c18b0b9-94c3-45c9-a00d-a1d09163ba14",
+            "colId": "259aa200-d965-4f91-84a7-594d28ddcd15",
+            "containerId": "",
+            "name": "post/id GraphQL",
+            "url": "localhost:9090/graphql",
+            "method": "POST",
+            "sortNum": 50000,
+            "created": "2024-01-29T12:12:24.981Z",
+            "modified": "2024-01-29T12:18:15.470Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation {\n agregarPersona(id:5, nombre: \"DAW2\", edad: 25) {\n    id\n    nombre\n    edad\n }\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "ba3049cd-a3e2-45be-a73e-6bc51aefd157",
+            "colId": "259aa200-d965-4f91-84a7-594d28ddcd15",
+            "containerId": "",
+            "name": "delete/id GraphQL",
+            "url": "localhost:9090/graphql",
+            "method": "POST",
+            "sortNum": 60000,
+            "created": "2024-01-29T12:21:33.020Z",
+            "modified": "2024-01-29T12:24:08.488Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation {\n eliminarPersona(id:2)\n}"
+                }
+            },
+            "tests": []
+        },
+        {
+            "_id": "106618c9-82a5-42f4-b671-bbeb062a11cb",
+            "colId": "259aa200-d965-4f91-84a7-594d28ddcd15",
+            "containerId": "",
+            "name": "update/id GraphQL",
+            "url": "localhost:9090/graphql",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-01-29T12:24:47.341Z",
+            "modified": "2024-01-29T12:25:34.977Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "graphql",
+                "raw": "",
+                "form": [],
+                "graphql": {
+                    "query": "mutation {\n actualizarPersona(id: 3, nombre: \"Nuevo Nombre\", edad: 26) {\n    id\n    nombre\n    edad\n }\n}"
+                }
+            },
+            "tests": []
+        }
+    ]
+}
